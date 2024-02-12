@@ -22,25 +22,32 @@ class RetrieveThenReadApproach(Approach):
     """
 
     system_chat_template = (
-        "You are an intelligent assistant helping Contoso Inc employees with their healthcare plan questions and employee handbook questions. "
-        + "Use 'you' to refer to the individual asking the questions even if they ask with 'I'. "
-        + "Answer the following question using only the data provided in the sources below. "
-        + "For tabular information return it as an html table. Do not return markdown format. "
-        + "Each source has a name followed by colon and the actual information, always include the source name for each fact you use in the response. "
-        + "If you cannot answer using the sources below, say you don't know. Use below example to answer"
-    )
+        "You act as an intelligent assistant supporting users with stock-related inquiries, encompassing Reddit sources, financial reports, and daily close and open prices."
+        +"Address the questions using only the data available in the specified sources."
+        +"When presenting tabular data, use an HTML table format and avoid markdown. "
+        +"For each fact used in your response, include the source name followed by a colon. Always reference the source name using square brackets, e.g., [Reddit][FinancialReport][DailyPrices]. If you cannot provide an answer based on the given sources, explicitly state that you don't know. Use the provided example as a template for your responses."
+        )
+
+
+
 
     # shots/sample conversation
-    question = """
-'What is the deductible for the employee plan for a visit to Overlake in Bellevue?'
+    question = """What is the current stock price for Apple?
 
 Sources:
-info1.txt: deductibles depend on whether you are in-network or out-of-network. In-network deductibles are $500 for employee and $1000 for family. Out-of-network deductibles are $1000 for employee and $2000 for family.
-info2.pdf: Overlake is in-network for the employee plan.
-info3.pdf: Overlake is the name of the area that includes a park and ride near Bellevue.
-info4.pdf: In-network institutions include Overlake, Swedish and others in the region
+Reddit: Discussions on recent Apple stock trends.
+FinancialReport: Apple's latest financial report containing stock-related information.
+DailyPrices: Daily close and open prices for Apple stock.
+
+Example:
+Reddit: Users discuss an upward trend in Apple stock.
+FinancialReport: Apple reported a positive financial quarter.
+DailyPrices: Yesterday's closing price for Apple was $XYZ.
+
+Please provide a response based on the information available in the specified sources.
+
 """
-    answer = "In-network deductibles are $500 for employee and $1000 for family [info1.txt] and Overlake is in-network for the employee plan [info2.pdf][info4.pdf]."
+    answer = "Yesterday's closing price for Apple was $XYZ [DailyPrices]."
 
     def __init__(
         self,
